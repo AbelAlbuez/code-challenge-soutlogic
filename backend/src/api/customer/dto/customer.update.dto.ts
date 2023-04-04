@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { UpdateCustomerAddressDTO } from './customer.address.update.dto';
 
 export class UpdateCustomerDto {
   @IsString()
@@ -13,5 +14,5 @@ export class UpdateCustomerDto {
   public email: string;
 
   @IsNotEmpty()
-  public isActive: boolean;
+  public addresses: UpdateCustomerAddressDTO[];
 }

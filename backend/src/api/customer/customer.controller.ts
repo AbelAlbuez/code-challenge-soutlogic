@@ -37,7 +37,17 @@ export class CustomerController {
       a: {
         summary: 'Request sample',
         description: 'Body is used to create a new customer',
-        value: { name: '', lastName: '', email: '' } as CreateCustomerDto,
+        value: {
+          name: '',
+          lastName: '',
+          email: '',
+          addresses: [
+            {
+              name: '',
+              address: '',
+            },
+          ],
+        } as CreateCustomerDto,
       },
     },
   })
@@ -65,7 +75,13 @@ export class CustomerController {
           name: '',
           lastName: '',
           email: '',
-          isActive: true,
+          addresses: [
+            {
+              id: 0,
+              name: '',
+              address: '',
+            },
+          ],
         } as UpdateCustomerDto,
       },
     },

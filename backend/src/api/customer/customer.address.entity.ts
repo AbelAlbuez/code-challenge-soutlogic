@@ -4,29 +4,23 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
-import { CustomerAddress } from './customer.address.entity';
+import { Customer } from './customer.entity';
 
 @Entity()
-export class Customer {
+export class CustomerAddress {
   @PrimaryGeneratedColumn()
   public id!: number;
 
   @Column({ type: 'varchar', length: 120 })
   public name: string;
 
-  @Column({ type: 'varchar', length: 120 })
-  public lastName: string;
+  @Column({ type: 'varchar', length: 500 })
+  public address: string;
 
-  @Column({ type: 'varchar', length: 120 })
-  public email: string;
-
-  @OneToMany(
-    (type) => CustomerAddress,
-    (customerAddress) => customerAddress.customer,
-  )
-  addresses: CustomerAddress[];
+  @ManyToOne((type) => Customer, (customer) => customer.addresses)
+  customer: Customer;
 
   /*
    * Create and Update Date Columns
