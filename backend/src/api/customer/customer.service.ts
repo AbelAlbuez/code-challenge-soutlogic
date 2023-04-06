@@ -22,7 +22,26 @@ export class CustomerService {
   }
 
   public async deleteCustomer(id: number): Promise<boolean> {
-    const response = await this.repository.delete(id);
+    let response = null;
+    await this.manager.transaction(async (manager) => {
+      const customerToRemove = await this.getCustomer(id);
+      if (customerToRemove.addresses.length > 0) {
+        for (
+          let index = 0;
+          index < customerToRemove.addresses.length;
+          index++
+        ) {
+          const element = customerToRemove.addresses[index];
+          await manager.delete(CustomerAddress, {
+            id: element.id,
+          });
+        }
+      }
+
+      response = await manager.delete(Customer, {
+        id: id,
+      });
+    });
     return response.affected > 0;
   }
 
