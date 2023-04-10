@@ -57,8 +57,11 @@ export class CustomerController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get Customer by Id' })
-  public getCustomer(@Param('id', ParseIntPipe) id: number): Promise<Customer> {
-    return this.service.getCustomer(id);
+  public async getCustomer(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Customer> {
+    const response = await this.service.getCustomer(id);
+    return response;
   }
 
   @Put(':id')

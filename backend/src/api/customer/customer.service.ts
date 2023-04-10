@@ -12,13 +12,18 @@ export class CustomerService {
   private readonly repository: Repository<Customer>;
   constructor(private manager: EntityManager) {}
 
-  public getCustomer(id: number): Promise<Customer> {
-    return this.repository.findOne({
-      where: {
-        id: id,
-      },
-      relations: ['addresses'],
+  public async getCustomer(id: number): Promise<Customer> {
+    let response = null;
+    await this.manager.transaction(async (manager) => {
+      response = await manager.findOne(Customer, {
+        where: {
+          id: id,
+        },
+        relations: ['addresses'],
+      });
     });
+
+    return response;
   }
 
   public async deleteCustomer(id: number): Promise<boolean> {

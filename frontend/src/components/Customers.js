@@ -11,7 +11,7 @@ const Customers = () => {
   const navigate = useNavigate();
 
   const getCustomer = async (id) => {
-    navigate(`/customer/${id}`)
+    navigate(`/${id}`)
   };
 
   const deleteCustomer = async (id) => {
@@ -32,8 +32,11 @@ const Customers = () => {
   const editCustomer = async (id) => {
     const { data: response } = await customerServices.getById(id);
     setCustomer(response);
-    console.log(customer);
     navigate(`/edit/${id}`)
+  };
+
+  const goToAdd = async (id) => {
+    navigate(`/add`)
   };
 
   useEffect(() => {
@@ -58,7 +61,10 @@ const Customers = () => {
           <div className="row mt-3">
             <div className="col-md-4 offset-4">
               <div className="d-grid mx-auto">
-                <button className="btn btn-dark" onClick={() => {}}>
+                <button className="btn btn-dark" 
+                 onClick={() => {
+                                goToAdd();
+                              }}>
                   <i className="fa-solid fa-circle-plus"></i> Add
                 </button>
               </div>
